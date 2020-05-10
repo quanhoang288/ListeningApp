@@ -16,11 +16,13 @@ public class LevelModel {
     private final int level;
     public LevelModel(int level){
         this.level = level;
-        exerciseList = getExerciseByLevel(level);
+        //exerciseList = getExerciseByLevel(level);
     }
+    /*
     public ArrayList<Exercise> getExerciseByLevel(int level){
         return new ArrayList<>();
     }
+    */
     
     public Exercise getExerciseByTitle(String title){
         Exercise res = null;
