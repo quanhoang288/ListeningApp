@@ -3,69 +3,69 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TopicPanel extends View{
-    private javax.swing.JButton backButton;
+    private JButton backButton;
     private JPanel lessonPanel;
-    private JPanel panel;
+    private JPanel[] panelList = new JPanel[10];
     private JScrollPane scrollPane;
-    private JPanel topicPanel;
-    public JButton[] lessonListButton = new JButton[10];
-    public JLabel[] topicList = new JLabel[10];
+    private JButton[] lessonListButton = new JButton[10];
+    private JLabel[] topicList = new JLabel[10];
+    private JLabel[] transcriptListLabel = new JLabel[10];
+    private JSeparator[] separators = new JSeparator[9];
 
     public TopicPanel(){
         backButton = new JButton();
         scrollPane = new JScrollPane();
-        panel = new JPanel();
         lessonPanel = new JPanel();
-        topicPanel = new JPanel();
+        for(int i=0; i<10; i++){
+            panelList[i] = new JPanel();
+            lessonListButton[i]= new JButton();
+            topicList[i]= new JLabel();
+            transcriptListLabel[i] = new JLabel();
+            if(i != 9){
+                separators[i] = new JSeparator();
+            }
+        }
 
         backButton.setFont(new Font("Arial", 0, 14));
         backButton.setText("Back");
 
-        lessonPanel.setAutoscrolls(true);
-        lessonPanel.setMaximumSize(new Dimension(100, 100));
-        lessonPanel.setPreferredSize(new Dimension(100, 100));
         lessonPanel.setLayout(new BoxLayout(lessonPanel, BoxLayout.PAGE_AXIS));
+
         for(int i=0; i<10; i++){
             lessonListButton[i].setFont(new Font("Arial", 0, 14));
-            lessonListButton[i].setText("Lesson "+i);
-            lessonListButton[i].setMaximumSize(new Dimension(100, 100));
-            lessonListButton[i].setMinimumSize(new Dimension(100, 100));
-            lessonListButton[i].setPreferredSize(new Dimension(100, 100));
-            lessonPanel.add(lessonListButton[i]);
-        }
+            lessonListButton[i].setText("Lesson " + (i+1));
+            lessonListButton[i].setMaximumSize(new Dimension(100, 30));
+            lessonListButton[i].setMinimumSize(new Dimension(100, 30));
+            lessonListButton[i].setPreferredSize(new Dimension(100, 30));
 
-        topicPanel.setPreferredSize(new Dimension(480, 1000));
-        topicPanel.setLayout(new BoxLayout(topicPanel, javax.swing.BoxLayout.PAGE_AXIS));
-        for(int i=0; i<10; i++){
             topicList[i].setFont(new Font("Arial", 0, 14));
-            topicList[i].setText("jLabel1");
-            topicList[i].setMaximumSize(new Dimension(480, 100));
-            topicList[i].setMinimumSize(new Dimension(480, 100));
-            topicList[i].setPreferredSize(new Dimension(480, 100));
-            topicPanel.add(topicList[i]);
+            topicList[i].setText("Level " +   "       Time: " + "       High Score: ");
+            topicList[i].setMaximumSize(new Dimension(400, 30));
+            topicList[i].setMinimumSize(new Dimension(400, 30));
+            topicList[i].setPreferredSize(new Dimension(400, 30));
+
+            transcriptListLabel[i].setFont(new Font("Arial", 0, 14));
+            transcriptListLabel[i].setText("Transcript: " );
+            transcriptListLabel[i].setMaximumSize(new Dimension(400, 30));
+            transcriptListLabel[i].setMinimumSize(new Dimension(400, 30));
+            transcriptListLabel[i].setPreferredSize(new Dimension(400, 30));
         }
 
-        GroupLayout panelLayout = new GroupLayout(panel);
-        panel.setLayout(panelLayout);
-        panelLayout.setHorizontalGroup(
-            panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
-                .addComponent(lessonPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(topicPanel, GroupLayout.PREFERRED_SIZE, 480, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        panelLayout.setVerticalGroup(
-            panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lessonPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(topicPanel, GroupLayout.DEFAULT_SIZE, 1030, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        for(int i=0; i<10; i++){
+            panelList[i].setMaximumSize(new Dimension(638, 100));
+            panelList[i].setMinimumSize(new Dimension(638, 100));
+            panelList[i].setLayout(new BoxLayout(panelList[i], BoxLayout.PAGE_AXIS));
+            panelList[i].add(lessonListButton[i]);
+            panelList[i].add(topicList[i]);
+            panelList[i].add(transcriptListLabel[i]);
+        }
 
-        scrollPane.setViewportView(panel);
+        for(int i=0; i<10; i++){
+            lessonPanel.add(panelList[i]);
+            if(i != 9) lessonPanel.add(separators[i]);
+        }
+
+        scrollPane.setViewportView(lessonPanel);
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -83,18 +83,18 @@ public class TopicPanel extends View{
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(backButton, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(10, 10, 10)
                 .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 480, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
     }
 
-    public javax.swing.JButton getBackButton() {
+    public JButton getBackButton() {
         return backButton;
     }
 
-    public void setBackButton(javax.swing.JButton backButton) {
+    public void setBackButton(JButton backButton) {
         this.backButton = backButton;
     }
 

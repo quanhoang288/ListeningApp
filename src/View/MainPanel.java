@@ -11,7 +11,7 @@ public class MainPanel extends View{
         startButton = new JButton();
         helpButton = new JButton();
         exitButton = new JButton();
-        helpButton = new JButton();
+        historyButton = new JButton();
 
         startButton.setText("Start");
         startButton.setToolTipText("Start learning English");
