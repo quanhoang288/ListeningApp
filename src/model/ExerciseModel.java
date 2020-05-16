@@ -4,27 +4,22 @@
  * and open the template in the editor.
  */
 package model;
-
+import DAO.ExerciseDAO;
 /**
  *
  * @author DELL 7577
  */
-public class LessonModel {
+public class ExerciseModel {
     private Exercise currentExercise;
     private int currentTrackScore = 0;
-    private String hint;
-    public LessonModel(Exercise ex){
+    
+    public ExerciseModel(Exercise ex){
         this.currentExercise = ex;
     }
     public Exercise getCurrentExercise(){
         return currentExercise;
     }
-    public String getCurrentTrackPath(){
-        return currentExercise.getCurrentTrackPath();
-    }
-    public String getCurrentTrackTranscript(){
-        return currentExercise.getCurrentTrackTranscript();
-    }
+    
 
     public int getCurrentTrackScore() {
         return currentTrackScore;
@@ -34,12 +29,8 @@ public class LessonModel {
         this.currentTrackScore = currentTrackScore;
     }
 
-    public String getHint() {
-        return hint;
-    }
-
-    public void setHint(String hint) {
-        this.hint = hint;
+    public Exercise getExcerciseByTitle(String title){
+        return ExerciseDAO.getExerciseByTitle(title, getCurrentExercise().getLevel());
     }
     
     
