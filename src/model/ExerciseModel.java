@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package Model;
+
+import java.sql.SQLException;
+
 import DAO.ExerciseDAO;
+
 /**
  *
  * @author DELL 7577
@@ -12,14 +16,14 @@ import DAO.ExerciseDAO;
 public class ExerciseModel {
     private Exercise currentExercise;
     private int currentTrackScore = 0;
-    
-    public ExerciseModel(Exercise ex){
+
+    public ExerciseModel(Exercise ex) {
         this.currentExercise = ex;
     }
-    public Exercise getCurrentExercise(){
+
+    public Exercise getCurrentExercise() {
         return currentExercise;
     }
-    
 
     public int getCurrentTrackScore() {
         return currentTrackScore;
@@ -29,8 +33,14 @@ public class ExerciseModel {
         this.currentTrackScore = currentTrackScore;
     }
 
-    public Exercise getExcerciseByTitle(String title){
-        return ExerciseDAO.getExerciseByTitle(title, getCurrentExercise().getLevel());
+    public Exercise getExcerciseByTitle(String title) {
+        try {
+            return ExerciseDAO.getExerciseByTitle(title, 1);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
     }
     
     

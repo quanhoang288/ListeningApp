@@ -3,30 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package Model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author DELL 7577
  */
 public class Exercise {
-    private String title;
-    private int level;
+    private String Title;
+    private int Level;
     private int currentTrack;
-    private List<Track> trackList;
-    
-    public Exercise(){
-        trackList = new ArrayList<>();
+    private ArrayList<Track> listTrack;
+
+    public String getTitle() {
+        return Title;
     }
 
-    public Exercise(String title, int level, int currentTrack, List<Track> trackList) {
-        this.title = title;
-        this.level = level;
-        this.currentTrack = currentTrack;
-        this.trackList = trackList;
+    public void setTitle(String title) {
+        Title = title;
+    }
+
+    public int getLevel() {
+        return Level;
+    }
+
+    public void setLevel(int level) {
+        Level = level;
     }
 
     public int getCurrentTrack() {
@@ -37,31 +41,26 @@ public class Exercise {
         this.currentTrack = currentTrack;
     }
 
-    public List<Track> getTrackList() {
-        return trackList;
+    public ArrayList<Track> getListTrack() {
+        return listTrack;
     }
 
-    public void setTrackList(List<Track> trackList) {
-        this.trackList = trackList;
-    }
-    
-    
-    
-    
-    public String getTitle() {
-        return title;
+    public void setListTrack(ArrayList<Track> listTrack) {
+        this.listTrack = listTrack;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public int getLevel() {
-        return level;
+    public Exercise() {
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public Exercise(String title, int level, int currentTrack, ArrayList<Track> listTrack) {
+        Title = title;
+        Level = level;
+        this.currentTrack = currentTrack;
+        this.listTrack = listTrack;
     }
+
+    
+    
     
     
     
