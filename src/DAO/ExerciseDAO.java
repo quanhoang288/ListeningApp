@@ -27,6 +27,9 @@ public class ExerciseDAO {
         }
     return list;
     }
+
+
+    
     public static Exercise getExerciseByTitle(String title, int lv) throws SQLException{
         Connection connection = JDBCConnection.getJDBCConnection();
         String sql = "SELECT track.Audio,  track.Transcript,track.Time FROM track INNER JOIN exercise On track.exerciseID = exercise.idExercise AND exercise.Title ="+ "\"" +title+ "\"";

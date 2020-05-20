@@ -56,5 +56,11 @@ public class History {
         this.date = date;
         this.Score = Score;
     }
+
+    @Override
+    public String toString() {
+        return "History [ID=" + ID + ", Level=" + Level + ", Score=" + Score + ", Topic=" + Topic + ", date=" + date
+                + "]";
+    }
     
 }

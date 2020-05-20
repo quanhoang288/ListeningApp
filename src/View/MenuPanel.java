@@ -1,18 +1,21 @@
 package View;
 import javax.swing.*;
 
-public class MainPanel extends View{
+public class MenuPanel extends View{
 
     private JButton exitButton;
     private JButton helpButton;
     private JButton historyButton;
     private JButton startButton;
-    public MainPanel(){
+    public MenuPanel(){
         startButton = new JButton();
         helpButton = new JButton();
         exitButton = new JButton();
         historyButton = new JButton();
-
+        startButton.setActionCommand("0");
+        helpButton.setActionCommand("2");
+        historyButton.setActionCommand("1");
+        exitButton.setActionCommand("3");
         startButton.setText("Start");
         startButton.setToolTipText("Start learning English");
         startButton.setFont(new java.awt.Font("Arial", 0, 14));
@@ -84,6 +87,5 @@ public class MainPanel extends View{
     public void setStartButton(JButton startButton) {
         this.startButton = startButton;
     }
-
     
 }
