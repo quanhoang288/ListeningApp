@@ -15,7 +15,6 @@ import java.util.List;
 public class Exercise {
     private String title;
     private int level;
-    private int currentTrack;
     private List<Track> trackList;
     
     public Exercise(){
@@ -25,18 +24,9 @@ public class Exercise {
     public Exercise(String title, int level, int currentTrack, List<Track> trackList) {
         this.title = title;
         this.level = level;
-        this.currentTrack = currentTrack;
         this.trackList = trackList;
     }
-
-    public int getCurrentTrack() {
-        return currentTrack;
-    }
-
-    public void setCurrentTrack(int currentTrack) {
-        this.currentTrack = currentTrack;
-    }
-
+    
     public List<Track> getTrackList() {
         return trackList;
     }
