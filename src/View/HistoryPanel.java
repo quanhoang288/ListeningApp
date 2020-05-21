@@ -3,6 +3,7 @@ package View;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -45,7 +46,7 @@ public class HistoryPanel extends View implements ActionListener {
             defaultTableModel.addRow(new  Object[]{x.getID(), x.getLevel(), x.getTopic(), x.getScore(), x.getDate()});
         }
         jScrollPane1.setViewportView(historyTable1);
-
+        historyPage1.setPreferredSize(new Dimension(800,500));
         GroupLayout historyPage1Layout = new GroupLayout(historyPage1);
         historyPage1.setLayout(historyPage1Layout);
         historyPage1Layout.setHorizontalGroup(
@@ -85,10 +86,10 @@ public class HistoryPanel extends View implements ActionListener {
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout
-                .createSequentialGroup().addGap(80, 80, 80)
+                .createSequentialGroup().addGap(0, 80, 80)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(backButton, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(historyTabbedPane, GroupLayout.PREFERRED_SIZE, 640, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(historyTabbedPane, GroupLayout.PREFERRED_SIZE, 800, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(80, Short.MAX_VALUE)));
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup().addGap(10, 10, 10)
