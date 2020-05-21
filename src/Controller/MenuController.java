@@ -33,12 +33,14 @@ public class MenuController implements ActionListener {
         int action = Integer.parseInt(e.getActionCommand());
         switch (action){
             case 0:
+                LevelController lc = new LevelController(new LevelPanel());
+                MainFrame.refresh(lc.getLevelPanel());
                 break;
             case 1:
                 HistoryController hc = new HistoryController(new HistoryModel(),new HistoryPanel());
                 MainFrame.refresh(hc.getHistoryPanel());
                 break;
-            case 2:
+            case 2:  
                 MainFrame.refresh(new HelpPanel());
                 break;
             case 3:

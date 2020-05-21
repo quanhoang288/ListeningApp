@@ -1,11 +1,7 @@
 package Controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import Model.HistoryModel;
 import View.HistoryPanel;
-import Model.History;
 public class HistoryController {
     HistoryModel historyModel;
     HistoryPanel historyPanel; 
