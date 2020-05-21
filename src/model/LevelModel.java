@@ -16,6 +16,7 @@ public class LevelModel {
     private final int level;
     public LevelModel(int level){
         this.level = level;
+
         exerciseList = getAllExerciseByLevel(level);
     }
     public List<Exercise> getAllExerciseByLevel(int level){
@@ -24,6 +25,24 @@ public class LevelModel {
 
     public List<Exercise> getExerciseList() {
         return exerciseList;
+        //exerciseList = getExerciseByLevel(level);
+    }
+    /*
+    public ArrayList<Exercise> getExerciseByLevel(int level){
+        return new ArrayList<>();
+    }
+    */
+    
+    public Exercise getExerciseByTitle(String title){
+        Exercise res = null;
+        for (int i = 0; i < exerciseList.size(); ++i){
+            Exercise tmp = exerciseList.get(i);
+            if (tmp.getTitle().equalsIgnoreCase(title)){
+                res = tmp;
+                break;
+            }
+        }
+        return res;
     }
     
 
