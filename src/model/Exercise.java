@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author DELL 7577
  */
 public class Exercise {
+    private int Time;
     private String Title;
     private int Level;
     private int currentTrack;
@@ -52,7 +53,16 @@ public class Exercise {
     public Exercise() {
     }
 
-    public Exercise(String title, int level, int currentTrack, ArrayList<Track> listTrack) {
+    public int getTime() {
+        return Time;
+    }
+
+    public void setTime(int time) {
+        Time = time;
+    }
+
+    public Exercise(int time, String title, int level, int currentTrack, ArrayList<Track> listTrack) {
+        Time = time;
         Title = title;
         Level = level;
         this.currentTrack = currentTrack;
