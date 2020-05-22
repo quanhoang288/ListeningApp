@@ -7,12 +7,10 @@ import java.util.ArrayList;
 import Model.Track;
 import Model.Exercise;
 public class ExerciseDAO {
-    static ArrayList<Exercise> list = new ArrayList<>();
     public static ArrayList<Exercise> getAllExerciseByLv(int Lv) throws SQLException{
+    ArrayList<Exercise> list = new ArrayList<>();
     Connection connection = JDBCConnection.getJDBCConnection();
-    String sql = "SELECT exercise.Title,exercise.Lv ,exercise.Time"
-            + "FROM exercise "
-            + "WHERE exercise.Lv = " +Lv;
+    String sql = "SELECT exercise.Title, exercise.Lv ,exercise.Time FROM test.exercise WHERE exercise.Lv = " + Lv ;
     try{
         PreparedStatement prepareStatement = connection.prepareStatement(sql);
         ResultSet rs = prepareStatement.executeQuery();
@@ -56,4 +54,14 @@ public class ExerciseDAO {
             }
         return ex;   
         }
+     //    public static void main(String[] args) {
+        //     try {
+        //         for (Exercise x : ExerciseDAO.getAllExerciseByLv(1)) {
+        //             System.out.println(x.toString());
+        //         }
+        //     } catch (SQLException e) {
+        //         // TODO Auto-generated catch block
+        //         e.printStackTrace();
+        //     }
+     //    }
 }

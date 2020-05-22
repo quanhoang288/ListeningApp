@@ -10,26 +10,32 @@ import java.awt.event.ActionListener;
 import Model.LevelModel;
 public class TopicPanel extends View implements ActionListener {
     private JButton backButton;
-    private LevelModel lm;
+    private LevelModel lm ;
     private JPanel lessonPanel;
-    private JPanel[] panelList = new JPanel[10];
+    private JPanel[] panelList;
     private JScrollPane scrollPane;
-    private JButton[] lessonListButton = new JButton[10];
-    private JLabel[] topicList = new JLabel[10];
-    private JLabel[] transcriptListLabel = new JLabel[10];
-    private JSeparator[] separators = new JSeparator[9];
+    private JButton[] lessonListButton;
+    private JLabel[] topicList;
+    private JLabel[] transcriptListLabel ;
+    private JSeparator[] separators ;
     public TopicPanel(int level) {
         lm = new LevelModel(level);
+        int size = lm.getAllExerciseByLevel(level).size();
+        panelList = new JPanel[size];
+        lessonListButton = new JButton[size];
+        topicList = new JLabel[size];
+        transcriptListLabel = new JLabel[size];
+        separators = new JSeparator[size -1];
         backButton = new JButton();
         scrollPane = new JScrollPane();
         lessonPanel = new JPanel();
         backButton.addActionListener(this);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < size; i++) {
             panelList[i] = new JPanel();
             lessonListButton[i] = new JButton();
             topicList[i] = new JLabel();
             transcriptListLabel[i] = new JLabel();
-            if (i != 9) {
+            if (i != size - 1) {
                 separators[i] = new JSeparator();
             }
         }
@@ -39,7 +45,7 @@ public class TopicPanel extends View implements ActionListener {
 
         lessonPanel.setLayout(new BoxLayout(lessonPanel, BoxLayout.PAGE_AXIS));
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < size; i++) {
             lessonListButton[i].setFont(new Font("Arial", 0, 14));
             lessonListButton[i].setText("Lesson " + (i + 1));
             lessonListButton[i].setMaximumSize(new Dimension(100, 30));
@@ -47,7 +53,7 @@ public class TopicPanel extends View implements ActionListener {
             lessonListButton[i].setPreferredSize(new Dimension(100, 30));
 
             topicList[i].setFont(new Font("Arial", 0, 14));
-            topicList[i].setText("Level " + lm.getLevel() + "       Time: " + lm.getAllExerciseByLevel(level).get(i).getTime() +"       High Score: ");
+            topicList[i].setText("Level " + lm.getLevel() + "       Time: " +lm.getAllExerciseByLevel(level).get(i).getTime()  +"       High Score: ");
             topicList[i].setMaximumSize(new Dimension(400, 30));
             topicList[i].setMinimumSize(new Dimension(400, 30));
             topicList[i].setPreferredSize(new Dimension(400, 30));
@@ -59,7 +65,7 @@ public class TopicPanel extends View implements ActionListener {
             transcriptListLabel[i].setPreferredSize(new Dimension(400, 30));
         }
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < size; i++) {
             panelList[i].setMaximumSize(new Dimension(638, 100));
             panelList[i].setMinimumSize(new Dimension(638, 100));
             panelList[i].setLayout(new BoxLayout(panelList[i], BoxLayout.PAGE_AXIS));
@@ -68,9 +74,9 @@ public class TopicPanel extends View implements ActionListener {
             panelList[i].add(transcriptListLabel[i]);
         }
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < size; i++) {
             lessonPanel.add(panelList[i]);
-            if (i != 9)
+            if (i != size -1)
                 lessonPanel.add(separators[i]);
         }
 

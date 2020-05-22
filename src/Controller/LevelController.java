@@ -32,7 +32,6 @@ public class LevelController implements ActionListener {
             case 1:
                 TopicController tc1 = new TopicController(new LevelModel(action), new TopicPanel(action));
                 MainFrame.refresh(tc1.getTopicPanel());
-
                 break;
             case 2:  
             TopicController tc2 = new TopicController(new LevelModel(action), new TopicPanel(action));

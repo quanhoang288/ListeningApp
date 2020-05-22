@@ -69,6 +69,11 @@ public class Exercise {
         this.listTrack = listTrack;
     }
 
+    @Override
+    public String toString() {
+        return "Exercise [Level=" + Level + ", Time=" + Time + ", Title=" + Title +  "]";
+    }
+
     
     
     
