@@ -4,12 +4,13 @@
  * and open the template in the editor.
  */
 package Model;
-//import DAO.ExerciseDAO;
+import DAO.ExerciseDAO;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
@@ -19,6 +20,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Timer;
 import javax.swing.text.AbstractDocument;
+
 /**
  *
  * @author DELL 7577
@@ -38,7 +40,7 @@ public class ExerciseModel {
     private int currentCharPos;
     private boolean isPlaying;
     private AudioInputStream audioInputStream;
-    private Clip clip; 
+    private Clip clip;
     private Long currentFrame;
     AbstractDocument textDocument;
 
@@ -46,8 +48,8 @@ public class ExerciseModel {
     private int percentPerSec;
     private int currentProgress;
     private Timer timer;
-    
-    public ExerciseModel(Exercise ex){
+
+    public ExerciseModel(Exercise ex) {
         currentTrack = -1;
         this.currentExercise = ex;
         this.points = new int[maxNumOfAttempts];
@@ -61,7 +63,9 @@ public class ExerciseModel {
             Logger.getLogger(ExerciseModel.class.getName()).log(Level.SEVERE, null, ex1);
         }
     }
-    public void loadFile() throws FileNotFoundException, UnsupportedAudioFileException, IOException, LineUnavailableException{
+
+    public void loadFile()
+            throws FileNotFoundException, UnsupportedAudioFileException, IOException, LineUnavailableException {
         currentTrack++;
         String audioPath = this.currentExercise.getListTrack().get(currentTrack).getAudio();
         String transcriptPath = this.currentExercise.getListTrack().get(currentTrack).getTranscript();
@@ -71,24 +75,25 @@ public class ExerciseModel {
         clip.open(audioInputStream);
         transcript = "";
         String tmp;
-        while ((tmp = bf.readLine()) != null){
+        while ((tmp = bf.readLine()) != null) {
             transcript += tmp;
         }
         words = transcript.split(" ");
-        pointPerWord = 100/words.length;
-        for (String word: words)
+        pointPerWord = 100 / words.length;
+        for (String word : words)
             System.out.print(word + " ");
-        
-        time = (int)clip.getMicrosecondLength()/1000000;
-        percentPerSec = 100/time;
-        
+
+        time = (int) clip.getMicrosecondLength() / 1000000;
+        percentPerSec = 100 / time;
+
     }
-    public void loadAudio(){
-        
+
+    public void loadAudio() {
+
         clip.setMicrosecondPosition(0);
         clip.start();
         isPlaying = true;
-        
+
     }
 
     public AbstractDocument getTextDocument() {
@@ -98,14 +103,13 @@ public class ExerciseModel {
     public void setTextDocument(AbstractDocument textDocument) {
         this.textDocument = textDocument;
     }
-    
-    public void stopAudio(){
+
+    public void stopAudio() {
         clip.stop();
         isPlaying = false;
     }
-    
-    
-    public Exercise getCurrentExercise(){
+
+    public Exercise getCurrentExercise() {
         return currentExercise;
     }
 
@@ -157,7 +161,6 @@ public class ExerciseModel {
         this.transcript = transcript;
     }
 
-
     public String[] getWords() {
         return words;
     }
@@ -189,8 +192,6 @@ public class ExerciseModel {
     public void setPlaying(boolean isPlaying) {
         this.isPlaying = isPlaying;
     }
-
-
 
     public AudioInputStream getAudioInputStream() {
         return audioInputStream;
@@ -271,11 +272,21 @@ public class ExerciseModel {
     public void setTimer(Timer timer) {
         this.timer = timer;
     }
+
+    public Exercise getExcerciseByTitle(String title, int level) {
+        try {
+            return ExerciseDAO.getExerciseByTitle(title, level);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void setCurrentExercise(Exercise currentExercise) {
+        this.currentExercise = currentExercise;
+    }
     
-//    public Exercise getExcerciseByTitle(String title){
-//        return ExerciseDAO.getExerciseByTitle(title, getCurrentExercise().getLevel());
-//    }
-//    
     
     
     

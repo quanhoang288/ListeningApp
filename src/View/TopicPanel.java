@@ -102,4 +102,12 @@ public class TopicPanel extends View{
         return backButton;
     }
 
+    public JLabel[] getLessonLabel() {
+        return lessonLabel;
+    }
+
+    public void setLessonLabel(JLabel[] lessonLabel) {
+        this.lessonLabel = lessonLabel;
+    }
+
 }

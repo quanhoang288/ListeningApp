@@ -52,6 +52,7 @@ public class Exercise {
     }
 
     public Exercise() {
+        listTrack = new ArrayList<Track>();
     }
 
     public int getTime() {
@@ -81,6 +82,7 @@ public class Exercise {
         this.currentTrack = currentTrack;
         this.listTrack = listTrack;
     }
+
 
     
     
