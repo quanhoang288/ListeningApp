@@ -10,7 +10,7 @@ public class ExerciseDAO {
     public static ArrayList<Exercise> getAllExerciseByLv(int Lv) throws SQLException{
     ArrayList<Exercise> list = new ArrayList<>();
     Connection connection = JDBCConnection.getJDBCConnection();
-    String sql = "SELECT exercise.Title, exercise.Lv ,exercise.Time FROM test.exercise WHERE exercise.Lv = " + Lv ;
+    String sql = "SELECT exercise.Title, exercise.Lv ,exercise.Time,exercise.HighScore FROM test.exercise WHERE exercise.Lv = " + Lv ;
     try{
         PreparedStatement prepareStatement = connection.prepareStatement(sql);
         ResultSet rs = prepareStatement.executeQuery();
@@ -19,6 +19,7 @@ public class ExerciseDAO {
             ex.setTitle(rs.getString("Title"));
             ex.setLevel(rs.getInt("Lv"));
             ex.setTime(rs.getInt("Time"));
+            ex.setHighScore(rs.getInt("HighScore"));
             list.add(ex);
         }
     } catch (SQLException e){

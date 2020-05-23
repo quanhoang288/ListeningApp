@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class Exercise {
     private int Time;
+    private int HighScore;
     private String Title;
     private int Level;
     private int currentTrack;
@@ -61,17 +62,24 @@ public class Exercise {
         Time = time;
     }
 
-    public Exercise(int time, String title, int level, int currentTrack, ArrayList<Track> listTrack) {
+
+
+
+    public int getHighScore() {
+        return HighScore;
+    }
+
+    public void setHighScore(int highScore) {
+        HighScore = highScore;
+    }
+
+    public Exercise(int time, int highScore, String title, int level, int currentTrack, ArrayList<Track> listTrack) {
         Time = time;
+        HighScore = highScore;
         Title = title;
         Level = level;
         this.currentTrack = currentTrack;
         this.listTrack = listTrack;
-    }
-
-    @Override
-    public String toString() {
-        return "Exercise [Level=" + Level + ", Time=" + Time + ", Title=" + Title +  "]";
     }
 
     
