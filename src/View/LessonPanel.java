@@ -5,7 +5,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -62,6 +61,7 @@ public class LessonPanel extends JPanel{
         JPanel textPanel = new JPanel();
         text = new JTextField();
         text.setPreferredSize(new Dimension(750, 30));
+        text.setTransferHandler(null);
         //text.addKeyListener(lessonController);
         textPanel.add(text);
 

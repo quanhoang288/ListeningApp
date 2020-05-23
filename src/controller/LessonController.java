@@ -9,11 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import java.io.FileNotFoundException;
-
 import java.io.IOException;
-import java.util.Dictionary;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.LineEvent;
@@ -143,7 +139,6 @@ public class LessonController extends DocumentFilter implements ActionListener, 
                     StyleConstants.setForeground(keyWord, Color.gray.brighter());
                     if (!exerciseModel.getIsInserted()[currentWordPos]){
                         exerciseModel.getIsInserted()[currentWordPos] = true;
-                        //lessonPanel.getAns().getStyledDocument().insertString(lessonPanel.getAns().getDocument().getLength(), words[exerciseModel.getCurrentWordPos()] + " ", keyWord);
                         lessonPanel.getAns().getStyledDocument().insertString(lessonPanel.getAns().getDocument().getLength(), words[currentWordPos] + " ", keyWord);
                     }
                 }
@@ -185,6 +180,7 @@ public class LessonController extends DocumentFilter implements ActionListener, 
         }  
             else 
                 Toolkit.getDefaultToolkit().beep();
+
 }
     public void remove(FilterBypass fb, int offset, int length) throws BadLocationException{
                 exerciseModel.setCurrentCharPos(exerciseModel.getCurrentCharPos() - 1);
@@ -195,9 +191,7 @@ public class LessonController extends DocumentFilter implements ActionListener, 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == exerciseModel.getTimer()){
-                System.out.println("firing!");
                 int currentSec = exerciseModel.getCurrentSec();
-                
                 fillProgressBar();
                 if (exerciseModel.getCurrentSec() > 9)
                     lessonPanel.getCurrentTime().setText("00:" + Integer.toString(exerciseModel.getCurrentSec()));  
@@ -213,7 +207,6 @@ public class LessonController extends DocumentFilter implements ActionListener, 
                         if (exerciseModel.getCurrentAttempt() < ExerciseModel.getMaxNumOfAttempts()){
                             lessonPanel.getbPlay().setIcon(new ImageIcon("Image/pause" + ".png", "pause button"));
                             exerciseModel.loadAudio();
-                            exerciseModel.getTimer().start();
                             if (exerciseModel.getCurrentWordPos() != exerciseModel.getWords().length){
                                 exerciseModel.setCurrentAttempt(exerciseModel.getCurrentAttempt() + 1);
                                     
@@ -265,7 +258,6 @@ public class LessonController extends DocumentFilter implements ActionListener, 
         else if (e.getSource() == lessonPanel.getbListen()){
             exerciseModel.loadAudio();
             lessonPanel.getbPlay().setEnabled(false);
-            exerciseModel.getTimer().start();
         }
     }
 
@@ -283,6 +275,8 @@ public class LessonController extends DocumentFilter implements ActionListener, 
             exerciseModel.getTimer().stop();
             
         }
+        else if (event.getType() == LineEvent.Type.START)
+            exerciseModel.getTimer().start();
     }
 
     @Override
@@ -303,10 +297,7 @@ public class LessonController extends DocumentFilter implements ActionListener, 
                 else{
                     if (exerciseModel.getCurrentAttempt() < ExerciseModel.getMaxNumOfAttempts()){
                         lessonPanel.getbPlay().setIcon(new ImageIcon("Image/pause" + ".png", "pause button"));
-                        //exerciseModel.getTimer().setInitialDelay(0);
-                        exerciseModel.loadAudio();
-                        exerciseModel.getTimer().start();
-                        
+                        exerciseModel.loadAudio();                        
                         exerciseModel.setCurrentAttempt(exerciseModel.getCurrentAttempt() + 1);
 
                     }
@@ -314,7 +305,7 @@ public class LessonController extends DocumentFilter implements ActionListener, 
                         lessonPanel.getText().setEditable(false);
                         lessonPanel.getText().requestFocus(false);
                         exerciseModel.setCurrentPoint(0);
-                            // check if last track
+                        // check if last track
                         if (exerciseModel.getCurrentTrack() != exerciseModel.getCurrentExercise().getTrackList().size() - 1)
                             lessonPanel.getNextPanel().setVisible(true);
                     }
