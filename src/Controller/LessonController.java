@@ -287,6 +287,14 @@ public class LessonController extends DocumentFilter implements ActionListener, 
     //         }
     //     });
     // }
+
+    public LessonPanel getLessonPanel() {
+        return lessonPanel;
+    }
+
+    public void setLessonPanel(LessonPanel lessonPanel) {
+        this.lessonPanel = lessonPanel;
+    }
     
     
 }
