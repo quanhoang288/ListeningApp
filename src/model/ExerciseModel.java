@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
@@ -29,12 +31,16 @@ public class ExerciseModel {
     private int currentTrackScore;
     private int currentAttempt;
     private int currentTrack;
-    private int maxNumOfAttempts = 20;
+    private static final int maxNumOfAttempts = 20;
     private int[] points;
+    private int totalPoint;
     private int currentPoint;
     private int pointPerWord;
     private String transcript;
-    private String[] words;
+    private String[] words, standardizedWords;
+    private boolean[] isInserted;
+    private static final String dictPath = "words-1.txt";
+    private static Set<String> dict = new HashSet<>();
     private int currentWordPos;
     private int currentCharPos;
     private boolean isPlaying;
@@ -61,9 +67,18 @@ public class ExerciseModel {
         } catch (LineUnavailableException ex1) {
             Logger.getLogger(ExerciseModel.class.getName()).log(Level.SEVERE, null, ex1);
         }
+        isInserted = new boolean[words.length];
+    }
+    public static void loadDict() throws FileNotFoundException, IOException{
+        BufferedReader bf = new BufferedReader(new FileReader(new File(dictPath)));
+        String key;
+        while ((key = bf.readLine()) != null){
+            dict.add(key);
+        }
     }
     public void loadFile() throws FileNotFoundException, UnsupportedAudioFileException, IOException, LineUnavailableException{
         currentTrack++;
+        System.out.println("Current track: " + Integer.toString(currentTrack));
         String audioPath = this.currentExercise.getTrackList().get(currentTrack).getAudioPath();
         String transcriptPath = this.currentExercise.getTrackList().get(currentTrack).getTranscript();
         BufferedReader bf = new BufferedReader(new FileReader(new File(transcriptPath)));
@@ -76,6 +91,14 @@ public class ExerciseModel {
             transcript += tmp;
         }
         words = transcript.split(" ");
+        standardizedWords = new String[words.length];
+        for (int i = 0; i < words.length; ++i){
+            int beginPos = 0;
+            int endPos = words[i].length();
+            while (!Character.isAlphabetic(words[i].charAt(beginPos))) beginPos++;
+            while (!Character.isAlphabetic(words[i].charAt(endPos - 1))) endPos--;
+            standardizedWords[i] = words[i].substring(beginPos, endPos);
+        }
         pointPerWord = 100/words.length;
         for (String word: words)
             System.out.print(word + " ");
@@ -84,6 +107,23 @@ public class ExerciseModel {
         percentPerSec = 100/time;
         
     }
+
+    public boolean[] getIsInserted() {
+        return isInserted;
+    }
+
+    public void setIsInserted(boolean[] isInserted) {
+        this.isInserted = isInserted;
+    }
+    
+    public int getTotalPoint() {
+        return totalPoint;
+    }
+
+    public void setTotalPoint(int totalPoint) {
+        this.totalPoint = totalPoint;
+    }
+    
     public void loadAudio(){
         
         clip.setMicrosecondPosition(0);
@@ -92,6 +132,23 @@ public class ExerciseModel {
         
     }
 
+    public String[] getStandardizedWords() {
+        return standardizedWords;
+    }
+
+    public void setStandardizedWords(String[] standardizedWords) {
+        this.standardizedWords = standardizedWords;
+    }
+    
+
+    public static Set<String> getDict() {
+        return dict;
+    }
+
+    public static void setDict(Set<String> dict) {
+        ExerciseModel.dict = dict;
+    }
+    
     public AbstractDocument getTextDocument() {
         return textDocument;
     }
@@ -134,14 +191,11 @@ public class ExerciseModel {
         this.currentAttempt = currentAttempt;
     }
 
-    public int getMaxNumOfAttempts() {
+    public static int getMaxNumOfAttempts() {
         return maxNumOfAttempts;
     }
 
-    public void setMaxNumOfAttempts(int maxNumOfAttempts) {
-        this.maxNumOfAttempts = maxNumOfAttempts;
-    }
-
+    
     public int[] getPoints() {
         return points;
     }

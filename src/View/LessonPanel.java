@@ -18,6 +18,7 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JTextPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
@@ -29,7 +30,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class LessonPanel extends JPanel{
     private JTextField text;
-    private JTextArea ans;
+    private JTextPane ans;
     private JProgressBar progressBar;
     private JLabel currentTime;
     private JLabel trackLen;
@@ -69,12 +70,10 @@ public class LessonPanel extends JPanel{
         JPanel audioPanel = new JPanel();
         audioPanel.setPreferredSize(new Dimension(600, 300));
         audioPanel.setLayout(new BoxLayout(audioPanel, BoxLayout.Y_AXIS));
-        ans = new JTextArea(2, 50);
-        ans.setEditable(false);
-        ans.setLineWrap(true);
-        ans.setWrapStyleWord(true);
+        ans = new JTextPane();
+        ans.setEditable(false);        
         ans.setPreferredSize(new Dimension(600, 30));
-        ans.setRows(2);
+
         ans.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
  
         // Containing next and listen button
@@ -139,11 +138,11 @@ public class LessonPanel extends JPanel{
         this.text = text;
     }
 
-    public JTextArea getAns() {
+    public JTextPane getAns() {
         return ans;
     }
 
-    public void setAns(JTextArea ans) {
+    public void setAns(JTextPane ans) {
         this.ans = ans;
     }
 
