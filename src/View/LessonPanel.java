@@ -13,6 +13,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import static java.awt.Component.LEFT_ALIGNMENT;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -40,6 +41,7 @@ public class LessonPanel extends JPanel{
     private JButton bNext;
     private JButton bListen;
     private JButton bPlay;
+    private JButton bBack;
     public LessonPanel(){
         initComponents();
     }
@@ -47,8 +49,14 @@ public class LessonPanel extends JPanel{
         
         
         //JPanel textPanel = new JPanel();
-        
+        // panel for back button
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
+        buttonPanel.setForeground(Color.white);
+        bBack = new JButton("Back");
+        buttonPanel.add(bBack);
         // chart panel
+       
         dataset = createDataset(0, null);
         chart = createChart(dataset, 1);
         chartPanel = new ChartPanel(chart);
@@ -120,10 +128,12 @@ public class LessonPanel extends JPanel{
         // main panel
         //JPanel mainPanel = new JPanel();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(buttonPanel);
         this.add(chartPanel);
         this.add(musicPanel);
         this.add(audioPanel);
         this.add(textPanel);
+       
 //        this.getContentPane().add(mainPanel);
 //        this.setSize(800,600);
 //        this.setVisible(true);

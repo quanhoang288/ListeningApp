@@ -113,7 +113,8 @@ public class LessonController extends DocumentFilter implements ActionListener, 
                             String message = "Score: " + Integer.toString(exerciseModel.getTotalPoint()/(exerciseModel.getCurrentTrack() + 1)) + "/100" + "\n"
                                             + "Title: " + exerciseModel.getCurrentExercise().getTitle() + "\n"
                                             + "Level: " + exerciseModel.getCurrentExercise().getLevel();
-                            JOptionPane.showMessageDialog(lessonPanel, message);
+                            //JOptionPane.showMessageDialog(lessonPanel, message);
+                            JOptionPane.showMessageDialog(lessonPanel, message, "Congratulations", 1, null);
                         }
 
                     }
@@ -170,7 +171,8 @@ public class LessonController extends DocumentFilter implements ActionListener, 
                             String message = "Score: " + Integer.toString(exerciseModel.getTotalPoint()/(exerciseModel.getCurrentTrack() + 1)) + "/100" + "\n"
                                             + "Title: " + exerciseModel.getCurrentExercise().getTitle() + "\n"
                                             + "Level: " + exerciseModel.getCurrentExercise().getLevel();
-                            JOptionPane.showMessageDialog(lessonPanel, message);
+                            //JOptionPane.showMessageDialog(lessonPanel, message);
+                            JOptionPane.showMessageDialog(lessonPanel, message, "Congratulations", 1, null);
                         }
 
                     }
@@ -357,8 +359,12 @@ public class LessonController extends DocumentFilter implements ActionListener, 
         exerciseModel.getPoints()[exerciseModel.getCurrentAttempt() - 1] = exerciseModel.getCurrentPoint();
         generateChart(exerciseModel.getCurrentAttempt(), exerciseModel.getPoints());
         if (exerciseModel.getCurrentWordPos() == exerciseModel.getStandardizedWords().length - 1){
-             exerciseModel.getPoints()[exerciseModel.getCurrentAttempt() - 1] = 100;
-                        generateChart(exerciseModel.getCurrentAttempt(), exerciseModel.getPoints());
+            exerciseModel.getPoints()[exerciseModel.getCurrentAttempt() - 1] = 100;
+            generateChart(exerciseModel.getCurrentAttempt(), exerciseModel.getPoints());
+            // check for last track
+            if (exerciseModel.getCurrentTrack() == exerciseModel.getCurrentExercise().getTrackList().size() - 1){
+                // code for creating History
+            }
         }
         
     }
@@ -372,7 +378,7 @@ public class LessonController extends DocumentFilter implements ActionListener, 
     public void changedUpdate(DocumentEvent e) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     
     
 }

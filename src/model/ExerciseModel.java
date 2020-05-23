@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -48,7 +49,7 @@ public class ExerciseModel {
     private Clip clip; 
     private Long currentFrame;
     AbstractDocument textDocument;
-
+    private Date startTime;
     private int time, currentSec;
     private int percentPerSec;
     private int currentProgress;
@@ -108,6 +109,14 @@ public class ExerciseModel {
         
     }
 
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+    
     public boolean[] getIsInserted() {
         return isInserted;
     }
