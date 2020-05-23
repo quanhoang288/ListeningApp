@@ -16,9 +16,9 @@ import java.sql.SQLException;
  */
 public class JDBCConnection {
     public static Connection getJDBCConnection(){
-        final String url ="jdbc:mysql://localhost:3306/test";
+        final String url ="jdbc:mysql://localhost:3306/appinfo";
         final String user ="root";
-        final String password ="";
+        final String password ="Hoanghuyquan?288";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             try {
