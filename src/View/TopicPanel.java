@@ -43,7 +43,7 @@ public class TopicPanel extends View{
 
             information[i] =new JLabel();
             information[i].setFont(new Font("Arial", 0, 14));
-            information[i].setText("Level: "+lm.getLevel()+  "   Time: "+ lm.getAllExerciseByLevel(level).get(i).getTime() +"     HighScore: " + lm.getAllExerciseByLevel(level).get(i).getHighScore());
+            information[i].setText("Level: "+lm.getLevel()+  "   Time: "+ lm.getAllExerciseByLevel(level).get(i).getTime() +" seconds    HighScore: " + lm.getAllExerciseByLevel(level).get(i).getHighScore()+  "/100");
             information[i].setMaximumSize(new Dimension(640, 50));
             information[i].setMinimumSize(new Dimension(640, 50));
             information[i].setPreferredSize(new Dimension(640, 50));
