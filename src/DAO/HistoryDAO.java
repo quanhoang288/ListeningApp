@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ArrayList;
 import Model.History;
 import java.util.logging.Level;
@@ -18,8 +17,8 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class HistoryDAO {
-    public List<History> getAllHistory() throws SQLException{
-    List<History> list = new ArrayList<History>();
+    public static ArrayList<History> getAllHistory() throws SQLException{
+    ArrayList<History> list = new ArrayList<History>();
     Connection connection = JDBCConnection.getJDBCConnection();
     String sql = "SELECT * FROM test.history";
     try{

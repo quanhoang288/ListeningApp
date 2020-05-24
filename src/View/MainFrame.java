@@ -2,10 +2,8 @@ package View;
 
 import java.awt.*;
 import javax.swing.*;
-
 public class MainFrame extends JFrame{
-    private static MainFrame mainFrame = new MainFrame();
-
+    private static MainFrame instance = new MainFrame();
     public MainFrame(){
         setTitle("Learn English");
         setSize(800, 600);
@@ -14,12 +12,14 @@ public class MainFrame extends JFrame{
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
+    public static Container getInstance(){
+        return instance.getContentPane();
+    }
     public static void refresh(JPanel view){
-        mainFrame.getContentPane().removeAll();
-        mainFrame.getContentPane().add(view);
-        mainFrame.repaint();
-        mainFrame.revalidate();
-        mainFrame.setVisible(true);
+        instance.getContentPane().removeAll();
+        instance.getContentPane().add(view);
+        instance.repaint();
+        instance.revalidate();
+        instance.setVisible(true);
     }
 }

@@ -11,7 +11,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYDataset;
 import java.awt.BasicStroke;
 import java.awt.Color;
-import static java.awt.Component.LEFT_ALIGNMENT;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -31,6 +30,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class LessonPanel extends JPanel{
     private JTextField text;
     private JTextPane ans;
+
     private JProgressBar progressBar;
     private JLabel currentTime;
     private JLabel trackLen;
@@ -41,6 +41,7 @@ public class LessonPanel extends JPanel{
     private JButton bNext;
     private JButton bListen;
     private JButton bPlay;
+
     private JButton bBack;
     public LessonPanel(){
         initComponents();
@@ -56,7 +57,6 @@ public class LessonPanel extends JPanel{
         bBack = new JButton("Back");
         buttonPanel.add(bBack);
         // chart panel
-       
         dataset = createDataset(0, null);
         chart = createChart(dataset, 1);
         chartPanel = new ChartPanel(chart);
@@ -70,6 +70,7 @@ public class LessonPanel extends JPanel{
         text = new JTextField();
         text.setPreferredSize(new Dimension(750, 30));
         text.setTransferHandler(null);
+
         //text.addKeyListener(lessonController);
         textPanel.add(text);
 
@@ -78,6 +79,7 @@ public class LessonPanel extends JPanel{
         JPanel audioPanel = new JPanel();
         audioPanel.setPreferredSize(new Dimension(600, 300));
         audioPanel.setLayout(new BoxLayout(audioPanel, BoxLayout.Y_AXIS));
+
         ans = new JTextPane();
         ans.setEditable(false);        
         ans.setPreferredSize(new Dimension(600, 30));
@@ -133,7 +135,7 @@ public class LessonPanel extends JPanel{
         this.add(musicPanel);
         this.add(audioPanel);
         this.add(textPanel);
-       
+
 //        this.getContentPane().add(mainPanel);
 //        this.setSize(800,600);
 //        this.setVisible(true);
@@ -148,13 +150,16 @@ public class LessonPanel extends JPanel{
         this.text = text;
     }
 
+
     public JTextPane getAns() {
         return ans;
     }
 
-    public void setAns(JTextPane ans) {
+   public void setAns(JTextPane ans) {
         this.ans = ans;
     }
+    
+
 
     public JProgressBar getProgressBar() {
         return progressBar;

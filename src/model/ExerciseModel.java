@@ -1,19 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package model;
-//import DAO.ExerciseDAO;
-import com.sun.org.apache.bcel.internal.generic.DALOAD;
+
+package Model;
+import DAO.ExerciseDAO;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
@@ -23,15 +21,13 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Timer;
 import javax.swing.text.AbstractDocument;
-/**
- *
- * @author DELL 7577
- */
+
 public class ExerciseModel {
     private Exercise currentExercise;
     private int currentTrackScore;
     private int currentAttempt;
     private int currentTrack;
+
     private static final int maxNumOfAttempts = 20;
     private int[] points;
     private int totalPoint;
@@ -42,6 +38,7 @@ public class ExerciseModel {
     private boolean[] isInserted;
     private static final String dictPath = "words-1.txt";
     private static Set<String> dict = new HashSet<>();
+
     private int currentWordPos;
     private int currentCharPos;
     private boolean isPlaying;
@@ -50,6 +47,8 @@ public class ExerciseModel {
     private Long currentFrame;
     AbstractDocument textDocument;
     private Date startTime;
+
+
     private int time, currentSec;
     private int percentPerSec;
     private int currentProgress;
@@ -82,6 +81,8 @@ public class ExerciseModel {
         System.out.println("Current track: " + Integer.toString(currentTrack));
         String audioPath = this.currentExercise.getTrackList().get(currentTrack).getAudioPath();
         String transcriptPath = this.currentExercise.getTrackList().get(currentTrack).getTranscript();
+
+
         BufferedReader bf = new BufferedReader(new FileReader(new File(transcriptPath)));
         audioInputStream = AudioSystem.getAudioInputStream(new File(audioPath).getAbsoluteFile());
         clip = AudioSystem.getClip();
@@ -158,6 +159,7 @@ public class ExerciseModel {
         ExerciseModel.dict = dict;
     }
     
+
     public AbstractDocument getTextDocument() {
         return textDocument;
     }
@@ -171,8 +173,9 @@ public class ExerciseModel {
         isPlaying = false;
     }
     
-    
-    public Exercise getCurrentExercise(){
+
+
+    public Exercise getCurrentExercise() {
         return currentExercise;
     }
 
@@ -200,11 +203,13 @@ public class ExerciseModel {
         this.currentAttempt = currentAttempt;
     }
 
+
     public static int getMaxNumOfAttempts() {
         return maxNumOfAttempts;
     }
 
     
+
     public int[] getPoints() {
         return points;
     }
@@ -220,7 +225,6 @@ public class ExerciseModel {
     public void setTranscript(String transcript) {
         this.transcript = transcript;
     }
-
 
     public String[] getWords() {
         return words;
@@ -253,8 +257,6 @@ public class ExerciseModel {
     public void setPlaying(boolean isPlaying) {
         this.isPlaying = isPlaying;
     }
-
-
 
     public AudioInputStream getAudioInputStream() {
         return audioInputStream;
@@ -334,6 +336,21 @@ public class ExerciseModel {
 
     public void setTimer(Timer timer) {
         this.timer = timer;
+
+    }
+
+    public Exercise getExcerciseByTitle(String title, int level) {
+        try {
+            return ExerciseDAO.getExerciseByTitle(title, level);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void setCurrentExercise(Exercise currentExercise) {
+        this.currentExercise = currentExercise;
     }
     
 //    public Exercise getExcerciseByTitle(String title){
