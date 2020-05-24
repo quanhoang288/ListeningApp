@@ -1,17 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Model;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author DELL 7577
- */
 public class Exercise {
+
+    private String title;
+    private int level;
+    private List<Track> listTrack;
+    
+    public Exercise(){
+        listTrack = new ArrayList<Track>();
+    }
+
+    public Exercise(String title, int level, int currentTrack, List<Track> trackList) {
+        this.title = title;
+        this.level = level;
+        this.trackList = trackList;
+    }
+    
+    public List<Track> getTrackList() {
+        return trackList;
+    }
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String title) {
+        Title = title;
+    }
+
+    public int getLevel() {
+        return Level;
+    }
+
+    public void setLevel(int level) {
+        Level = level;
+    }
+
+
+    /*
     private int Time;
     private int HighScore;
     private String Title;
@@ -46,6 +74,9 @@ public class Exercise {
     public ArrayList<Track> getListTrack() {
         return listTrack;
     }
+  
+
+    
 
     public void setListTrack(ArrayList<Track> listTrack) {
         this.listTrack = listTrack;
@@ -82,6 +113,7 @@ public class Exercise {
         this.currentTrack = currentTrack;
         this.listTrack = listTrack;
     }
+    */
 
 
     
