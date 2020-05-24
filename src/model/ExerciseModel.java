@@ -79,7 +79,7 @@ public class ExerciseModel {
     public void loadFile() throws FileNotFoundException, UnsupportedAudioFileException, IOException, LineUnavailableException{
         currentTrack++;
         System.out.println("Current track: " + Integer.toString(currentTrack));
-        String audioPath = this.currentExercise.getTrackList().get(currentTrack).getAudioPath();
+        String audioPath = this.currentExercise.getTrackList().get(currentTrack).getAudio();
         String transcriptPath = this.currentExercise.getTrackList().get(currentTrack).getTranscript();
 
 

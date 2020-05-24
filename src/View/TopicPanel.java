@@ -1,7 +1,6 @@
 package View;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import Model.LevelModel;
 
@@ -109,5 +108,4 @@ public class TopicPanel extends View{
     public void setLessonLabel(JLabel[] lessonLabel) {
         this.lessonLabel = lessonLabel;
     }
-
 }

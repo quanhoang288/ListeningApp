@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.awt.*;
 
 import javax.swing.JLabel;
@@ -14,6 +16,7 @@ import Model.Exercise;
 import Model.ExerciseModel;
 import Model.LevelModel;
 import Model.Track;
+import DAO.ExerciseDAO;
 
 public class TopicController implements ActionListener, MouseListener {
     private LevelModel levelModel;
@@ -55,19 +58,23 @@ public class TopicController implements ActionListener, MouseListener {
         // TODO Auto-generated method stub
         JLabel x = (JLabel) e.getSource();
         String title = x.getText();
-        Track track1 = new Track();
-        track1.setAudio("C:\\Users\\Admin\\Documents\\GitHub\\ListeningApp\\fortnite1.mp3");
-        track1.setTranscript("C:\\Users\\Admin\\Documents\\GitHub\\ListeningApp\\transcript.txt");
-        //ExerciseModel em = new ExerciseModel(new Exercise());
-//        em.setCurrentExercise(em.getExcerciseByTitle(title, levelModel.getLevel()));
-        //em.getCurrentExercise().getListTrack().add(track1);
-        Exercise ex = new Exercise();
-        ex.getListTrack().add(track1);
-        ExerciseModel em = new ExerciseModel(ex);
-        //System.out.println(em.getCurrentExercise().getListTrack().size());
-        LessonPanel lp = new LessonPanel();
-        LessonController lc = new LessonController(em, lp);
-        MainFrame.refresh(lp);
+        int level = levelModel.getLevel();
+        Exercise ex;
+        try {
+            ex = ExerciseDAO.getExerciseByTitle(title, level);
+            ExerciseModel em = new ExerciseModel(ex);
+            LessonPanel lp = new LessonPanel();
+            try {
+                LessonController lc = new LessonController(em, lp);
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            MainFrame.refresh(lp);
+        } catch (SQLException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }      
     }
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -82,14 +89,18 @@ public class TopicController implements ActionListener, MouseListener {
         x.setForeground(Color.blue.brighter());
         topicPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
-
     @Override
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub
         JLabel x = (JLabel) e.getSource();
         x.setForeground(Color.black);
         topicPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-    }
-
-    
+    }  
+    // public static void main(String[] args) {
+    //     LevelModel lm = new LevelModel(1);
+    //     for (Track x : lm.getAllExerciseByLevel(1).get(1).getTrackList()){
+    //         System.out.println(x.toString());
+    //     }
+    //     System.out.println("True");
+    //}
 }

@@ -1,4 +1,4 @@
-package controller;
+package Controller;
 
 import View.LessonPanel;
 import java.awt.Color;
@@ -31,9 +31,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-import model.Exercise;
-import model.ExerciseModel;
-import model.Track;
+import Model.Exercise;
+import Model.ExerciseModel;
+import Model.Track;
 import org.jfree.data.xy.XYDataset;
 
 
@@ -325,33 +325,33 @@ public class LessonController extends DocumentFilter implements ActionListener, 
     public void keyReleased(KeyEvent e) {
         
     }
-    public static void main(String[] args){
-        EventQueue.invokeLater(new Runnable(){
-            public void run(){
-                LessonPanel lessonPanel = new LessonPanel();
-                Track track1 = new Track("190121-fortnite_1.wav", "transcript.txt", 8);
-                Track track2 = new Track("191004-living-by-the-sea_4.wav", "transcript4.txt", 14);
-                Exercise currentExercise = new Exercise();
-                currentExercise.getTrackList().add(track1);
-                currentExercise.getTrackList().add(track2);
-                currentExercise.setLevel(1);
-                currentExercise.setTitle("Some random title!");
-                ExerciseModel exerciseModel = new ExerciseModel(currentExercise);
-                try {
-                    LessonController lessonController = new LessonController(exerciseModel, lessonPanel);
-                } catch (IOException ex) {
-                    Logger.getLogger(LessonController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                lessonPanel.getTrackLen().setText("00:0" + Integer.toString(exerciseModel.getCurrentExercise().getTrackList().get(exerciseModel.getCurrentTrack()).getTime()));
-                JFrame frame = new JFrame("Demo");
-                frame.setLocationRelativeTo(null);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(800, 600);
-                frame.getContentPane().add(lessonPanel);
-                frame.setVisible(true);
-            }
-        });
-    }
+    // public static void main(String[] args){
+    //     EventQueue.invokeLater(new Runnable(){
+    //         public void run(){
+    //             LessonPanel lessonPanel = new LessonPanel();
+    //             Track track1 = new Track("190121-fortnite_1.wav", "transcript.txt", 8);
+    //             Track track2 = new Track("191004-living-by-the-sea_4.wav", "transcript4.txt", 14);
+    //             Exercise currentExercise = new Exercise();
+    //             currentExercise.getTrackList().add(track1);
+    //             currentExercise.getTrackList().add(track2);
+    //             currentExercise.setLevel(1);
+    //             currentExercise.setTitle("Some random title!");
+    //             ExerciseModel exerciseModel = new ExerciseModel(currentExercise);
+    //             try {
+    //                 LessonController lessonController = new LessonController(exerciseModel, lessonPanel);
+    //             } catch (IOException ex) {
+    //                 Logger.getLogger(LessonController.class.getName()).log(Level.SEVERE, null, ex);
+    //             }
+    //             lessonPanel.getTrackLen().setText("00:0" + Integer.toString(exerciseModel.getCurrentExercise().getTrackList().get(exerciseModel.getCurrentTrack()).getTime()));
+    //             JFrame frame = new JFrame("Demo");
+    //             frame.setLocationRelativeTo(null);
+    //             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    //             frame.setSize(800, 600);
+    //             frame.getContentPane().add(lessonPanel);
+    //             frame.setVisible(true);
+    //         }
+    //     });
+    // }
 
     @Override
     public void insertUpdate(DocumentEvent e) {

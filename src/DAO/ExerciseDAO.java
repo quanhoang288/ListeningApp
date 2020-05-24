@@ -32,7 +32,7 @@ public class ExerciseDAO {
     
     public static Exercise getExerciseByTitle(String title, int lv) throws SQLException{
         Connection connection = JDBCConnection.getJDBCConnection();
-        String sql = "SELECT track.Audio,  track.Transcript,track.Time FROM track INNER JOIN exercise On track.exerciseID = exercise.idExercise AND exercise.Title ="+ "\"" +title+ "\"";
+        String sql = "SELECT track.Audio, track.Transcript, track.Time FROM track INNER JOIN exercise On track.exerciseID = exercise.idExercise AND exercise.Title ="+ "\"" +title+ "\"";
         Exercise ex = new Exercise();
         try{
             PreparedStatement prepareStatement = connection.prepareStatement(sql);
@@ -47,7 +47,7 @@ public class ExerciseDAO {
                 }
                 ex.setLevel(lv);
                 ex.setTitle(title);
-                ex.setListTrack(listTrack);
+                ex.setTrackList(listTrack);
             }
             
         catch (SQLException e){
@@ -55,14 +55,14 @@ public class ExerciseDAO {
             }
         return ex;   
         }
-     //    public static void main(String[] args) {
+        // public static void main(String[] args) {
         //     try {
         //         for (Exercise x : ExerciseDAO.getAllExerciseByLv(1)) {
-        //             System.out.println(x.toString());
+        //             System.out.println(ExerciseDAO.getExerciseByTitle(x.getTitle(), 1).getTrackList().toString()+ "\n");
         //         }
         //     } catch (SQLException e) {
         //         // TODO Auto-generated catch block
         //         e.printStackTrace();
         //     }
-     //    }
+        // }
 }

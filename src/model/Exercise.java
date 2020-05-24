@@ -2,22 +2,19 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Exercise {
 
-    private String title;
-    private int level;
-    private List<Track> listTrack;
-    
+    private String Title;
+    private int Level;
+    private List<Track> trackList;
+    private int Time;
+    private int HighScore;
     public Exercise(){
-        listTrack = new ArrayList<Track>();
+        trackList = new ArrayList<Track>();
     }
 
-    public Exercise(String title, int level, int currentTrack, List<Track> trackList) {
-        this.title = title;
-        this.level = level;
-        this.trackList = trackList;
-    }
     
     public List<Track> getTrackList() {
         return trackList;
@@ -35,11 +32,10 @@ public class Exercise {
     }
 
     public void setLevel(int level) {
-        Level = level;
+        level = level;
     }
+/*
 
-
-    /*
     private int Time;
     private int HighScore;
     private String Title;
@@ -113,12 +109,44 @@ public class Exercise {
         this.currentTrack = currentTrack;
         this.listTrack = listTrack;
     }
-    */
 
 
-    
-    
-    
-    
+
+*/
+
+    public Exercise(String title, int level, List<Track> trackList, int time, int highScore) {
+        this.Title = title;
+        this.Level = level;
+        this.trackList = trackList;
+        Time = time;
+        HighScore = highScore;
+    }
+
+    public void setTrackList(List<Track> trackList) {
+        this.trackList = trackList;
+    }
+
+    public int getTime() {
+        return Time;
+    }
+
+    public void setTime(int time) {
+        Time = time;
+    }
+
+    public int getHighScore() {
+        return HighScore;
+    }
+
+    public void setHighScore(int highScore) {
+        HighScore = highScore;
+    }
+
+    @Override
+    public String toString() {
+        return "Exercise [HighScore=" + HighScore + ", Level=" + Level + ", Time=" + Time + ", Title=" + Title
+                + ", trackList=" + trackList + "]";
+    }
+  
     
 }
