@@ -5,7 +5,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -13,10 +12,12 @@ import org.jfree.data.xy.XYDataset;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JTextPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
@@ -28,7 +29,8 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class LessonPanel extends JPanel{
     private JTextField text;
-    private JTextArea ans;
+    private JTextPane ans;
+
     private JProgressBar progressBar;
     private JLabel currentTime;
     private JLabel trackLen;
@@ -39,6 +41,8 @@ public class LessonPanel extends JPanel{
     private JButton bNext;
     private JButton bListen;
     private JButton bPlay;
+
+    private JButton bBack;
     public LessonPanel(){
         initComponents();
     }
@@ -46,7 +50,12 @@ public class LessonPanel extends JPanel{
         
         
         //JPanel textPanel = new JPanel();
-        
+        // panel for back button
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
+        buttonPanel.setForeground(Color.white);
+        bBack = new JButton("Back");
+        buttonPanel.add(bBack);
         // chart panel
         dataset = createDataset(0, null);
         chart = createChart(dataset, 1);
@@ -60,6 +69,8 @@ public class LessonPanel extends JPanel{
         JPanel textPanel = new JPanel();
         text = new JTextField();
         text.setPreferredSize(new Dimension(750, 30));
+        text.setTransferHandler(null);
+
         //text.addKeyListener(lessonController);
         textPanel.add(text);
 
@@ -68,12 +79,11 @@ public class LessonPanel extends JPanel{
         JPanel audioPanel = new JPanel();
         audioPanel.setPreferredSize(new Dimension(600, 300));
         audioPanel.setLayout(new BoxLayout(audioPanel, BoxLayout.Y_AXIS));
-        ans = new JTextArea(2, 50);
-        ans.setEditable(false);
-        ans.setLineWrap(true);
-        ans.setWrapStyleWord(true);
+
+        ans = new JTextPane();
+        ans.setEditable(false);        
         ans.setPreferredSize(new Dimension(600, 30));
-        ans.setRows(2);
+
         ans.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
  
         // Containing next and listen button
@@ -120,10 +130,12 @@ public class LessonPanel extends JPanel{
         // main panel
         //JPanel mainPanel = new JPanel();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(buttonPanel);
         this.add(chartPanel);
         this.add(musicPanel);
         this.add(audioPanel);
         this.add(textPanel);
+
 //        this.getContentPane().add(mainPanel);
 //        this.setSize(800,600);
 //        this.setVisible(true);
@@ -138,13 +150,16 @@ public class LessonPanel extends JPanel{
         this.text = text;
     }
 
-    public JTextArea getAns() {
+
+    public JTextPane getAns() {
         return ans;
     }
 
-    public void setAns(JTextArea ans) {
+   public void setAns(JTextPane ans) {
         this.ans = ans;
     }
+    
+
 
     public JProgressBar getProgressBar() {
         return progressBar;
