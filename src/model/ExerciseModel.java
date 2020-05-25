@@ -36,7 +36,7 @@ public class ExerciseModel {
     private String transcript;
     private String[] words, standardizedWords;
     private boolean[] isInserted;
-    private static final String dictPath = "words-1.txt";
+    private static final String dictPath = "Dictionary.txt";
     private static Set<String> dict = new HashSet<>();
 
     private int currentWordPos;
