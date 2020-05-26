@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/DELL%207577/Documents/NetBeansProjects/ListeningApp/src/model/LevelModel.java</file>
-            <file>file:/C:/Users/DELL%207577/Documents/NetBeansProjects/ListeningApp/src/model/LessonModel.java</file>
-            <file>file:/C:/Users/DELL%207577/Documents/NetBeansProjects/ListeningApp/src/model/Exercise.java</file>
+            <file>file:/C:/Users/DELL%207577/Documents/NetBeansProjects/ListeningApp/src/View/MenuPanel.java</file>
+            <file>file:/C:/Users/DELL%207577/Documents/NetBeansProjects/ListeningApp/src/Controller/MainController.java</file>
+            <file>file:/C:/Users/DELL%207577/Documents/NetBeansProjects/ListeningApp/src/model/Track.java</file>
+            <file>file:/C:/Users/DELL%207577/Documents/NetBeansProjects/ListeningApp/src/Controller/TopicController.java</file>
+            <file>file:/C:/Users/DELL%207577/Documents/NetBeansProjects/ListeningApp/src/View/MainFrame.java</file>
+            <file>file:/C:/Users/DELL%207577/Documents/NetBeansProjects/ListeningApp/src/View/LessonPanel.java</file>
+            <file>file:/C:/Users/DELL%207577/Documents/NetBeansProjects/ListeningApp/src/model/ExerciseModel.java</file>
+            <file>file:/C:/Users/DELL%207577/Documents/NetBeansProjects/ListeningApp/src/Controller/LessonController.java</file>
+            <file>file:/C:/Users/DELL%207577/Documents/NetBeansProjects/ListeningApp/src/test/ChartTest.java</file>
         </group>
     </open-files>
 </project-private>

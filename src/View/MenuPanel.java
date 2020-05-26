@@ -13,6 +13,7 @@ public class MenuPanel extends View{
         exitButton = new JButton();
         historyButton = new JButton();
         startButton.setActionCommand("0");
+        startButton.requestFocus(true);
         helpButton.setActionCommand("2");
         historyButton.setActionCommand("1");
         exitButton.setActionCommand("3");

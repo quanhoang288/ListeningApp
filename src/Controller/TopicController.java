@@ -14,7 +14,10 @@ import Model.Exercise;
 import Model.ExerciseModel;
 import Model.LevelModel;
 import Model.Track;
-
+import controller.LessonController;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 public class TopicController implements ActionListener, MouseListener {
     private LevelModel levelModel;
     private TopicPanel topicPanel;
@@ -55,19 +58,30 @@ public class TopicController implements ActionListener, MouseListener {
         // TODO Auto-generated method stub
         JLabel x = (JLabel) e.getSource();
         String title = x.getText();
-        Track track1 = new Track();
-        track1.setAudio("190121-fortnite_1.wav");
-        track1.setTranscript("transcript.txt");
-        //ExerciseModel em = new ExerciseModel(new Exercise());
-//        em.setCurrentExercise(em.getExcerciseByTitle(title, levelModel.getLevel()));
-        //em.getCurrentExercise().getListTrack().add(track1);
-        Exercise ex = new Exercise();
-        ex.getListTrack().add(track1);
-        ExerciseModel em = new ExerciseModel(ex);
+        Track track1 = new Track("190121-fortnite_1.wav", "transcript.txt", 8);
+        Track track2 = new Track("191004-living-by-the-sea_4.wav", "transcript4.txt", 14);
+        Exercise currentExercise = new Exercise();
+        currentExercise.getListTrack().add(track1);
+        currentExercise.getListTrack().add(track2);
+        currentExercise.setLevel(1);
+        currentExercise.setTitle("Some random title!");
+        ExerciseModel exerciseModel = new ExerciseModel(currentExercise);
+        ExerciseModel em = new ExerciseModel(currentExercise);
         //System.out.println(em.getCurrentExercise().getListTrack().size());
-        System.out.println(ex.getListTrack().size());
+        //System.out.println(ex.getListTrack().size());
         LessonPanel lp = new LessonPanel();
-        LessonController lc = new LessonController(em, lp);
+        //lp.setMediaBar(em.getCurrentExercise().getListTrack().get(exerciseModel.getCurrentTrack()).getTime());
+        int trackLen = em.getCurrentExercise().getListTrack().get(exerciseModel.getCurrentTrack()).getTime();
+        if (trackLen > 9)
+            lp.getTrackLen().setText("00:" + Integer.toString(trackLen));
+        else 
+            lp.getTrackLen().setText("00:0" + Integer.toString(trackLen));
+        //System.out.println(Integer.toString(em.getCurrentExercise().getListTrack().get(exerciseModel.getCurrentTrack()).getTime()));
+        try {
+            LessonController lc = new LessonController(em, lp, this);
+        } catch (IOException ex) {
+            Logger.getLogger(TopicController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         MainFrame.refresh(lp);
     }
     @Override

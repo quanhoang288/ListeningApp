@@ -10,7 +10,7 @@ package Model;
  * @author DELL 7577
  */
 public class Track {
-    private String Audio, Transcript;
+    private String Audio, TranscriptPath, Transcript;
     private int Time;
 
     public Track() {
@@ -23,6 +23,15 @@ public class Track {
     public void setAudio(String audio) {
         Audio = audio;
     }
+
+    public String getTranscriptPath() {
+        return TranscriptPath;
+    }
+
+    public void setTranscriptPath(String TranscriptPath) {
+        this.TranscriptPath = TranscriptPath;
+    }
+    
 
     public String getTranscript() {
         return Transcript;
@@ -40,9 +49,9 @@ public class Track {
         Time = time;
     }
 
-    public Track(String audio, String transcript, int time) {
+    public Track(String audio, String transcriptPath, int time) {
         Audio = audio;
-        Transcript = transcript;
+        TranscriptPath = transcriptPath;
         Time = time;
     }
 

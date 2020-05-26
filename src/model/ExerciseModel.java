@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Model;
 import DAO.ExerciseDAO;
 import java.io.BufferedReader;
@@ -10,7 +6,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
@@ -20,39 +22,46 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Timer;
 import javax.swing.text.AbstractDocument;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeriesCollection;
 
-/**
- *
- * @author DELL 7577
- */
 public class ExerciseModel {
     private Exercise currentExercise;
     private int currentTrackScore;
     private int currentAttempt;
     private int currentTrack;
-    private int maxNumOfAttempts = 20;
+    private ArrayList<XYSeriesCollection> trackDatasets;
+    private static final int maxNumOfAttempts = 20;
     private int[] points;
+    private int totalPoint;
     private int currentPoint;
     private int pointPerWord;
     private String transcript;
-    private String[] words;
+    private String[] words, standardizedWords;
+    private boolean[] isInserted;
+    private static final String dictPath = "words-1.txt";
+    private static Set<String> dict = new HashSet<>();
+
     private int currentWordPos;
     private int currentCharPos;
     private boolean isPlaying;
     private AudioInputStream audioInputStream;
-    private Clip clip;
+    private Clip clip; 
     private Long currentFrame;
     AbstractDocument textDocument;
+    private Date startTime;
+
 
     private int time, currentSec;
     private int percentPerSec;
     private int currentProgress;
     private Timer timer;
-
-    public ExerciseModel(Exercise ex) {
+    
+    public ExerciseModel(Exercise ex){
         currentTrack = -1;
         this.currentExercise = ex;
         this.points = new int[maxNumOfAttempts];
+        this.trackDatasets = new ArrayList<>();
         try {
             loadFile();
         } catch (UnsupportedAudioFileException ex1) {
@@ -62,39 +71,107 @@ public class ExerciseModel {
         } catch (LineUnavailableException ex1) {
             Logger.getLogger(ExerciseModel.class.getName()).log(Level.SEVERE, null, ex1);
         }
+        isInserted = new boolean[words.length];
     }
-
-    public void loadFile()
-            throws FileNotFoundException, UnsupportedAudioFileException, IOException, LineUnavailableException {
+    public static void loadDict() throws FileNotFoundException, IOException{
+        BufferedReader bf = new BufferedReader(new FileReader(new File(dictPath)));
+        String key;
+        while ((key = bf.readLine()) != null){
+            dict.add(key);
+        }
+    }
+    public void loadFile() throws FileNotFoundException, UnsupportedAudioFileException, IOException, LineUnavailableException{
         currentTrack++;
+        System.out.println("Current track: " + Integer.toString(currentTrack));
         String audioPath = this.currentExercise.getListTrack().get(currentTrack).getAudio();
-        String transcriptPath = this.currentExercise.getListTrack().get(currentTrack).getTranscript();
+        String transcriptPath = this.currentExercise.getListTrack().get(currentTrack).getTranscriptPath();
+
+
         BufferedReader bf = new BufferedReader(new FileReader(new File(transcriptPath)));
         audioInputStream = AudioSystem.getAudioInputStream(new File(audioPath).getAbsoluteFile());
         clip = AudioSystem.getClip();
         clip.open(audioInputStream);
         transcript = "";
         String tmp;
-        while ((tmp = bf.readLine()) != null) {
+        while ((tmp = bf.readLine()) != null){
             transcript += tmp;
         }
+        this.currentExercise.getListTrack().get(currentTrack).setTranscript(transcript);
         words = transcript.split(" ");
-        pointPerWord = 100 / words.length;
-        for (String word : words)
+        standardizedWords = new String[words.length];
+        for (int i = 0; i < words.length; ++i){
+            int beginPos = 0;
+            int endPos = words[i].length();
+            while (!Character.isAlphabetic(words[i].charAt(beginPos))) beginPos++;
+            while (!Character.isAlphabetic(words[i].charAt(endPos - 1))) endPos--;
+            standardizedWords[i] = words[i].substring(beginPos, endPos);
+        }
+        pointPerWord = 100/words.length;
+        for (String word: words)
             System.out.print(word + " ");
-
-        time = (int) clip.getMicrosecondLength() / 1000000;
-        percentPerSec = 100 / time;
-
+        
+        time = (int)clip.getMicrosecondLength()/1000000;
+        percentPerSec = 100/time;
+        
     }
 
-    public void loadAudio() {
+    public ArrayList<XYSeriesCollection> getTrackDatasets() {
+        return trackDatasets;
+    }
 
+    public void setTrackDatasets(ArrayList<XYSeriesCollection> trackDatasets) {
+        this.trackDatasets = trackDatasets;
+    }
+    
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+    
+    public boolean[] getIsInserted() {
+        return isInserted;
+    }
+
+    public void setIsInserted(boolean[] isInserted) {
+        this.isInserted = isInserted;
+    }
+    
+    public int getTotalPoint() {
+        return totalPoint;
+    }
+
+    public void setTotalPoint(int totalPoint) {
+        this.totalPoint = totalPoint;
+    }
+    
+    public void loadAudio(){
+        
         clip.setMicrosecondPosition(0);
         clip.start();
         isPlaying = true;
-
+        
     }
+
+    public String[] getStandardizedWords() {
+        return standardizedWords;
+    }
+
+    public void setStandardizedWords(String[] standardizedWords) {
+        this.standardizedWords = standardizedWords;
+    }
+    
+
+    public static Set<String> getDict() {
+        return dict;
+    }
+
+    public static void setDict(Set<String> dict) {
+        ExerciseModel.dict = dict;
+    }
+    
 
     public AbstractDocument getTextDocument() {
         return textDocument;
@@ -103,11 +180,13 @@ public class ExerciseModel {
     public void setTextDocument(AbstractDocument textDocument) {
         this.textDocument = textDocument;
     }
-
-    public void stopAudio() {
+    
+    public void stopAudio(){
         clip.stop();
         isPlaying = false;
     }
+    
+
 
     public Exercise getCurrentExercise() {
         return currentExercise;
@@ -137,13 +216,12 @@ public class ExerciseModel {
         this.currentAttempt = currentAttempt;
     }
 
-    public int getMaxNumOfAttempts() {
+
+    public static int getMaxNumOfAttempts() {
         return maxNumOfAttempts;
     }
 
-    public void setMaxNumOfAttempts(int maxNumOfAttempts) {
-        this.maxNumOfAttempts = maxNumOfAttempts;
-    }
+    
 
     public int[] getPoints() {
         return points;
@@ -271,6 +349,7 @@ public class ExerciseModel {
 
     public void setTimer(Timer timer) {
         this.timer = timer;
+
     }
 
     public Exercise getExcerciseByTitle(String title, int level) {
@@ -287,6 +366,10 @@ public class ExerciseModel {
         this.currentExercise = currentExercise;
     }
     
+//    public Exercise getExcerciseByTitle(String title){
+//        return ExerciseDAO.getExerciseByTitle(title, getCurrentExercise().getLevel());
+//    }
+//    
     
     
     

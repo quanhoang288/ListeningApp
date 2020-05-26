@@ -5,7 +5,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -13,10 +12,17 @@ import org.jfree.data.xy.XYDataset;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JTextPane;
+import javax.swing.MutableComboBoxModel;
+import javax.swing.event.ListDataListener;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
@@ -28,24 +34,39 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class LessonPanel extends JPanel{
     private JTextField text;
-    private JTextArea ans;
+    private JTextPane ans;
+
     private JProgressBar progressBar;
     private JLabel currentTime;
     private JLabel trackLen;
     private JPanel nextPanel;
-    private XYDataset dataset;
+    private XYSeriesCollection dataset;
     private JFreeChart chart;
     private ChartPanel chartPanel;
     private JButton bNext;
     private JButton bListen;
     private JButton bPlay;
+
+    private JComboBox trackBox;
+    Box boxContainer;
+    private JButton bBack;
     public LessonPanel(){
         initComponents();
     }
     public void initComponents(){
         
         
-        //JPanel textPanel = new JPanel();
+
+        // panel for back button
+        JPanel buttonPanel = new JPanel();
+        bBack = new JButton("Back");
+  
+        boxContainer = Box.createHorizontalBox();
+        boxContainer.add(Box.createHorizontalStrut(30));
+        boxContainer.add(bBack);
+        boxContainer.setPreferredSize(new Dimension(800, 50));
+        buttonPanel.add(boxContainer);
+        buttonPanel.setPreferredSize(new Dimension(800, 100));
         
         // chart panel
         dataset = createDataset(0, null);
@@ -60,6 +81,8 @@ public class LessonPanel extends JPanel{
         JPanel textPanel = new JPanel();
         text = new JTextField();
         text.setPreferredSize(new Dimension(750, 30));
+        text.setTransferHandler(null);
+
         //text.addKeyListener(lessonController);
         textPanel.add(text);
 
@@ -68,12 +91,11 @@ public class LessonPanel extends JPanel{
         JPanel audioPanel = new JPanel();
         audioPanel.setPreferredSize(new Dimension(600, 300));
         audioPanel.setLayout(new BoxLayout(audioPanel, BoxLayout.Y_AXIS));
-        ans = new JTextArea(2, 50);
-        ans.setEditable(false);
-        ans.setLineWrap(true);
-        ans.setWrapStyleWord(true);
+
+        ans = new JTextPane();
+        ans.setEditable(false);        
         ans.setPreferredSize(new Dimension(600, 30));
-        ans.setRows(2);
+
         ans.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
  
         // Containing next and listen button
@@ -99,8 +121,8 @@ public class LessonPanel extends JPanel{
         progressBar.setValue(0);
         progressBar.setPreferredSize(new Dimension(650, 5));
         currentTime = new JLabel("00:00");
-        trackLen = new JLabel();
-        //progressBar.addChangeListener(lessonController);
+        trackLen = new JLabel("00:00");
+        
         
         bPlay = new JButton();
         ImageIcon playIcon = new ImageIcon("Image/play1"
@@ -120,16 +142,38 @@ public class LessonPanel extends JPanel{
         // main panel
         //JPanel mainPanel = new JPanel();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(buttonPanel);
         this.add(chartPanel);
         this.add(musicPanel);
         this.add(audioPanel);
         this.add(textPanel);
+        this.setBackground(Color.white);
 //        this.getContentPane().add(mainPanel);
 //        this.setSize(800,600);
 //        this.setVisible(true);
 //        this.setLocationRelativeTo(null);
     }
 
+    public Box getBoxContainer() {
+        return boxContainer;
+    }
+
+    public void setBoxContainer(Box boxContainer) {
+        this.boxContainer = boxContainer;
+    }
+    
+    public JComboBox getTrackBox() {
+        return trackBox;
+    }
+
+    public void setTrackBox(JComboBox trackBox) {
+        this.trackBox = trackBox;
+    }
+    
+    public JButton getbBack() {
+        return bBack;
+    }
+    
     public JTextField getText() {
         return text;
     }
@@ -138,13 +182,16 @@ public class LessonPanel extends JPanel{
         this.text = text;
     }
 
-    public JTextArea getAns() {
+
+    public JTextPane getAns() {
         return ans;
     }
 
-    public void setAns(JTextArea ans) {
+   public void setAns(JTextPane ans) {
         this.ans = ans;
     }
+    
+
 
     public JProgressBar getProgressBar() {
         return progressBar;
@@ -170,11 +217,11 @@ public class LessonPanel extends JPanel{
         this.trackLen = trackLen;
     }
 
-    public XYDataset getDataset() {
+    public XYSeriesCollection getDataset() {
         return dataset;
     }
 
-    public void setDataset(XYDataset dataset) {
+    public void setDataset(XYSeriesCollection dataset) {
         this.dataset = dataset;
     }
 
@@ -237,30 +284,24 @@ public class LessonPanel extends JPanel{
     }
     
 
-    public XYDataset createDataset(int currentAttempt, int[] points) {
+    public XYSeriesCollection createDataset(int currentAttempt, int[] points) {
         
         XYSeries series = new XYSeries("Current Attempt");
         for (int i = 0; i < currentAttempt; ++i){
             series.add(i + 1, points[i]);
         }
-
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
+//        XYSeries org = dataset.getSeries(0);
+//        
+//        for (int i = 0; i < org.getItemCount(); ++i)
+//            System.out.println(org.getItems().get(i).getClass());
         return dataset;
     }
     public JFreeChart createChart(XYDataset dataset, int currentTrack) {
         String trackNum = Integer.toString(currentTrack);
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "Track " + trackNum,
-                "Attempts",
-                "Points",
-                dataset,
-                PlotOrientation.VERTICAL,
-                true,
-                true,
-                false
-        );
-
+        //XYSeriesCollection data = (XYSeriesCollection)dataset;
+        JFreeChart chart = ChartFactory.createXYLineChart("Track " + trackNum, "Attempts", "Points", dataset, PlotOrientation.VERTICAL, true, true, false);
         XYPlot plot = chart.getXYPlot();
         ValueAxis domainAxis =  plot.getDomainAxis();
         domainAxis.setRange(0, 20);
@@ -286,7 +327,6 @@ public class LessonPanel extends JPanel{
         //                new Font("Serif", java.awt.Font.BOLD, 18)
         //        )
         //);
-
         return chart;
     }
     

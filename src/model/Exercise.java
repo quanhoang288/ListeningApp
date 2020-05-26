@@ -1,17 +1,69 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Model;
 
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author DELL 7577
- */
 public class Exercise {
+
+    private String title;
+    private int level;
+    private List<Track> listTrack;
+    private int time, highScore;
+    public Exercise(){
+        listTrack = new ArrayList<Track>();
+    }
+
+    public Exercise(int time, int highScore, String title, int level, ArrayList<Track> listTrack) {
+        this.time = time;
+        this.highScore = highScore;
+        this.title = title;
+        this.level = level;
+        this.listTrack = listTrack;
+    }
+
+    public List<Track> getListTrack() {
+        return listTrack;
+    }
+
+    public void setListTrack(List<Track> listTrack) {
+        this.listTrack = listTrack;
+    }
+
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public void setHighScore(int highscore) {
+        this.highScore = highscore;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+    
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+
+    /*
     private int Time;
     private int HighScore;
     private String Title;
@@ -46,6 +98,9 @@ public class Exercise {
     public ArrayList<Track> getListTrack() {
         return listTrack;
     }
+  
+
+    
 
     public void setListTrack(ArrayList<Track> listTrack) {
         this.listTrack = listTrack;
@@ -82,6 +137,7 @@ public class Exercise {
         this.currentTrack = currentTrack;
         this.listTrack = listTrack;
     }
+    */
 
 
     
